@@ -9,6 +9,13 @@ export type Cell = 'alive' | 'dead'
 /** A grid of cells, with equal number columns and rows */
 export type CellGrid = Cell[][]
 
+/** 
+ * For any Cell in a CellGrid, get the number of alive neighbours of that Cell
+ * 
+ * Neighbours are those Cells which are adjacent to the specified Cell at
+ * location (x,y) when layed out on a 2D plane (like a chessboard). Neighbours
+ * includes diagonals.
+ */  
 export function countAliveNeighbours(xPos: number, yPos: number, board: Readonly<CellGrid>): number {
   let neighbours = 0
   const boardColumnMax = board.length - 1 
