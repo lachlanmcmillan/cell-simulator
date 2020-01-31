@@ -21,7 +21,7 @@ test('countAliveNeighbours on testFrame1', () => {
   // 0 1 2 3 4 5 
     [0,1,1,1,0,0], // 0
     [0,1,1,2,1,0], // 1
-    [1,2,5,3,2,0], // 2
+    [1,3,5,3,2,0], // 2
     [1,1,3,2,2,0], // 3
     [1,2,3,2,1,0], // 4
     [0,0,0,0,0,0]  // 5
@@ -34,12 +34,13 @@ test('countAliveNeighbours on testFrame1', () => {
   const row = 4
   expect(expectedNumNeighbours[row][col]).toBe(3)
 
-  for (let x = 0; x < 6; x++) {
-    for (let y = 0; y < 6; y++) {
-      expect(
-        countAliveNeighbours(x, y, testFrame1)
-      ).toBe(expectedNumNeighbours[y][x])
-    }
-  }
+  const result = testFrame1.map((row, y) =>
+    row.map((cell, x) =>
+      countAliveNeighbours(x, y, testFrame1)
+    )
+  )
+  console.log('output: ', result)
+
+  expect(result).toStrictEqual(expectedNumNeighbours)
 })
 
