@@ -1,5 +1,8 @@
 import { CellGrid, countAliveNeighbours } from './cellSimulatorLib'
 
+/** helper function to convert string cell representation into Cell type */
+const toCell = (cell: string) => (cell !== ' ' ? 'alive' : 'dead')
+
 // the first frame of test image
 // https://user-images.githubusercontent.com/7149052/53603476-bfb00e00-3c05-11e9-8862-1dfd31836dcd.jpg
 const testFrame1: Readonly<CellGrid> = [ 
@@ -10,11 +13,7 @@ const testFrame1: Readonly<CellGrid> = [
   [' ','X','X','X',' ',' '], // 3
   [' ',' ',' ',' ',' ',' '], // 4
   [' ',' ',' ',' ',' ',' ']  // 5
-].map(row => 
-  row.map(cell => 
-    (cell !== ' ' ? 'alive' : 'dead')
-  )
-)
+].map(row => row.map(toCell)) 
 
 test('countAliveNeighbours on testFrame1', () => {
   const expectedNumNeighbours: number[][] = [ 
