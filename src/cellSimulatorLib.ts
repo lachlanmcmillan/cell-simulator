@@ -16,16 +16,16 @@ export type CellGrid = Cell[][]
  * location (x,y) when layed out on a 2D plane (like a chessboard). Neighbours
  * includes diagonals.
  */  
-export function countAliveNeighbours(xPos: number, yPos: number, board: Readonly<CellGrid>): number {
+export function countAliveNeighbours(xPos: number, yPos: number, grid: Readonly<CellGrid>): number {
   let neighbours = 0
-  const boardColumnMax = board.length - 1 
+  const boardColumnMax = grid.length - 1 
   for (let x = xPos - 1; x <= xPos + 1; x++) {
     for (let y = yPos - 1; y <= yPos + 1; y++) {
       if (x < 0 || y < 0) continue
       if (x > boardColumnMax || y > boardColumnMax) continue
       if (x === xPos && y === yPos) continue
 
-      if (board[y][x] === 'alive') neighbours++
+      if (grid[y][x] === 'alive') neighbours++
     }
   }
   return neighbours
