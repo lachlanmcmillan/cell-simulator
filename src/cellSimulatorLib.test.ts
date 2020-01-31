@@ -15,6 +15,46 @@ const testFrame1: Readonly<CellGrid> = [
   [' ',' ',' ',' ',' ',' ']  // 5
 ].map(row => row.map(toCell)) 
 
+const testFrame2: Readonly<CellGrid> = [ 
+//  0   1   2   3   4   5
+  [' ',' ',' ',' ',' ',' '], // 0
+  [' ',' ',' ',' ',' ',' '], // 1
+  [' ','X',' ','X',' ',' '], // 2
+  [' ',' ','X','X',' ',' '], // 3
+  [' ',' ','X',' ',' ',' '], // 4
+  [' ',' ',' ',' ',' ',' ']  // 5
+].map(row => row.map(toCell)) 
+
+const testFrame3: Readonly<CellGrid> = [ 
+//  0   1   2   3   4   5
+  [' ',' ',' ',' ',' ',' '], // 0
+  [' ',' ',' ',' ',' ',' '], // 1
+  [' ',' ',' ','X',' ',' '], // 2
+  [' ','X',' ','X',' ',' '], // 3
+  [' ',' ','X','X',' ',' '], // 4
+  [' ',' ',' ',' ',' ',' ']  // 5
+].map(row => row.map(toCell)) 
+
+const testFrame4: Readonly<CellGrid> = [ 
+//  0   1   2   3   4   5
+  [' ',' ',' ',' ',' ',' '], // 0
+  [' ',' ',' ',' ',' ',' '], // 1
+  [' ',' ','X',' ',' ',' '], // 2
+  [' ',' ',' ','X','X',' '], // 3
+  [' ',' ','X','X',' ',' '], // 4
+  [' ',' ',' ',' ',' ',' ']  // 5
+].map(row => row.map(toCell)) 
+
+const testFrame5: Readonly<CellGrid> = [ 
+//  0   1   2   3   4   5
+  [' ',' ',' ',' ',' ',' '], // 0
+  [' ',' ',' ',' ',' ',' '], // 1
+  [' ',' ',' ','X',' ',' '], // 2
+  [' ',' ',' ',' ','X',' '], // 3
+  [' ',' ','X','X','X',' '], // 4
+  [' ',' ',' ',' ',' ',' ']  // 5
+].map(row => row.map(toCell)) 
+
 test('countAliveNeighbours on testFrame1', () => {
   const expectedNumNeighbours: number[][] = [ 
   // 0 1 2 3 4 5 
