@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import classNames from 'classnames'
 import { CellGrid, Cell, countAliveNeighbours } from './cellSimulatorLib';
 import styles from './App.module.css';
@@ -16,11 +16,28 @@ const testFrame1: Readonly<CellGrid> = [
 ].map(row => row.map(toCell)) 
 
 const App: React.FC = () => {
+  const [showNeighboursCount, setShowNeighboursCount] = useState(false)
+
+  const toggleShowNeighboursCount = () => 
+    setShowNeighboursCount(!showNeighboursCount)
+
   return (
     <div className={styles.App}>
-      <CellGridDisplay
-        grid={testFrame1} 
-      />
+
+      <label> Show neighbours count
+        <input 
+          type="checkbox" 
+          onClick={toggleShowNeighboursCount} 
+          checked={showNeighboursCount}
+        />
+      </label>
+
+      <div className={styles.content}>
+        <CellGridDisplay
+          grid={testFrame1} 
+          showNeighboursCount={showNeighboursCount}
+        />
+      </div>
 
     </div>
   );
@@ -28,9 +45,13 @@ const App: React.FC = () => {
 
 interface CellGridDisplayProps {
   grid: Readonly<CellGrid>,
+  showNeighboursCount?: boolean
 }
 
-const CellGridDisplay: React.FC<CellGridDisplayProps> = ({ grid }: CellGridDisplayProps) => {
+const CellGridDisplay: React.FC<CellGridDisplayProps> = ({
+  grid,
+  showNeighboursCount
+}: CellGridDisplayProps) => {
   return (
     <div className={styles.container}>
       {grid.map((row, y) =>
@@ -38,7 +59,11 @@ const CellGridDisplay: React.FC<CellGridDisplayProps> = ({ grid }: CellGridDispl
           {row.map((cell, x) => 
             <CellDisplay 
               cell={cell} 
-              neighboursCount={countAliveNeighbours(x, y, grid)} 
+              neighboursCount={
+                showNeighboursCount
+                  ? countAliveNeighbours(x, y, grid)
+                  : undefined
+              }
             />
           )}
         </div>
