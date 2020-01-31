@@ -30,3 +30,8 @@ export function countAliveNeighbours(xPos: number, yPos: number, board: Readonly
   }
   return neighbours
 }
+
+export function generateNextGen(grid: Readonly<CellGrid>): CellGrid {
+  // stub!
+  return [ ...grid ]
+}

@@ -1,4 +1,4 @@
-import { CellGrid, countAliveNeighbours } from './cellSimulatorLib'
+import { CellGrid, countAliveNeighbours, generateNextGen } from './cellSimulatorLib'
 
 /** helper function to convert string cell representation into Cell type */
 const toCell = (cell: string) => (cell !== ' ' ? 'alive' : 'dead')
@@ -83,3 +83,9 @@ test('countAliveNeighbours on testFrame1', () => {
   expect(result).toStrictEqual(expectedNumNeighbours)
 })
 
+test('generateNextGen', () => {
+  expect(generateNextGen(testFrame1)).toStrictEqual(testFrame2)
+  expect(generateNextGen(testFrame2)).toStrictEqual(testFrame3)
+  expect(generateNextGen(testFrame3)).toStrictEqual(testFrame4)
+  expect(generateNextGen(testFrame4)).toStrictEqual(testFrame5)
+})
