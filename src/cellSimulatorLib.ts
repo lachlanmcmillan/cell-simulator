@@ -51,6 +51,10 @@ export function determineNextGenState(
   cell: CellState, 
   aliveNeighboursCount: number
 ): CellState {
-  // stub !
-  return 'alive'
+  return (
+    // these represent the possible states to live
+    (cell === 'alive' && aliveNeighboursCount === 2) ||
+    (cell === 'alive' && aliveNeighboursCount === 3) ||
+    (cell === 'dead' && aliveNeighboursCount === 3)
+  ) ? 'alive' : 'dead'
 }
