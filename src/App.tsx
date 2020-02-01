@@ -18,29 +18,11 @@ const testFrame1: Readonly<CellGrid> = [
 const App: React.FC = () => {
   const [showNeighboursCount, setShowNeighboursCount] = useState(false)
 
-  const [cellGrid, setCellGrid] = useState(testFrame1)
+  const { cellGrid, gotoNextGen, gotoPrevGen, reset, clear } = useCellSimulator(testFrame1)
 
   const toggleShowNeighboursCount = () => 
     setShowNeighboursCount(!showNeighboursCount)
 
-  const gotoNextGen = () =>
-    setCellGrid(generateNextGen(cellGrid))
-
-  const gotoPrevGen = () =>
-    console.log('not ready yet')
-
-  const reset = () =>
-    setCellGrid(testFrame1)
-
-  const clear = () => 
-    console.log('not ready yet')
-
-  const togglePlayPause = () => 
-    console.log('not ready yet')
-
-  const stop = () => 
-    console.log('not ready yet')
-  
   return (
     <div className={styles.App}>
 
@@ -58,6 +40,18 @@ const App: React.FC = () => {
         <button onClick={gotoNextGen}>Next Generation</button>
       </div>
 
+      <div>
+        <button onClick={gotoPrevGen}>Previous Generation</button>
+      </div>
+
+      <div>
+        <button onClick={reset}>Reset</button>
+      </div>
+
+      <div>
+        <button onClick={clear}>Clear</button>
+      </div>
+
       <div className={styles.content}>
         <CellGridDisplay
           grid={cellGrid} 
@@ -67,6 +61,57 @@ const App: React.FC = () => {
 
     </div>
   );
+}
+
+const useCellSimulator = (
+  initialState: Readonly<CellGrid> = createEmptyGrid(6,6)
+) => {
+  // quick implementation of a stack
+  // NOTE! should always have at least one CellGrid on the stack
+  const [gridStack, set] = useState([initialState])
+
+  const _getTopGrid = () => 
+    gridStack[gridStack.length - 1]
+
+  const _pushGrid = (grid: CellGrid) => 
+    set([...gridStack, grid])
+
+  const _popGrid = () => 
+    set(gridStack.slice(0, gridStack.length - 1))
+
+  const gotoNextGen = () => 
+    _pushGrid(generateNextGen(_getTopGrid()))
+
+  const gotoPrevGen = () => 
+    // minimum of one grid on the stack
+    (gridStack.length > 1 && _popGrid())
+
+  const reset = () => 
+    set(gridStack.slice(0,1))
+
+  const clear = () => {
+    const initial = gridStack[0]
+    const rows = initial.length
+    const columns = initial[0].length
+    const grid = createEmptyGrid(rows, columns)
+    // create a new bottom of the stack, so if user presses it will take them 
+    // back to the empty board at this stage 
+    set([grid])
+  }
+
+  const toggleSquare = (x: number, y: number) => null
+  const togglePlayPause = () => null
+  const stop = () => null
+
+  return { cellGrid: _getTopGrid(), gotoNextGen, gotoPrevGen, reset, clear }
+}
+
+const createEmptyGrid = (rows: number, columns: number): CellGrid => {
+  const grid = []
+  for (let i = 0; i < rows; i++) {
+    grid.push(new Array(columns).fill('dead'))
+  }
+  return grid
 }
 
 interface CellGridDisplayProps {
