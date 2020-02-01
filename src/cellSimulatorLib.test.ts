@@ -1,4 +1,9 @@
-import { CellGrid, countAliveNeighbours, generateNextGen } from './cellSimulatorLib'
+import { 
+  CellGrid, 
+  countAliveNeighbours, 
+  generateNextGen, 
+  determineNextGenState 
+} from './cellSimulatorLib'
 
 /** helper function to convert string cell representation into Cell type */
 const toCell = (cell: string) => (cell !== ' ' ? 'alive' : 'dead')
@@ -81,6 +86,38 @@ test('countAliveNeighbours on testFrame1', () => {
   console.log('output: ', result)
 
   expect(result).toStrictEqual(expectedNumNeighbours)
+})
+
+test('determineNextGenState', () => {
+  // A cell can have a maximum of eight neighbours and start as either 'alive'
+  // or 'dead'. Therefore, there are 18 possible states to be in as a cell
+  // goes into the next generation.
+
+  // - A Cell with fewer than two live neighbours dies of under-population.
+  // - A Cell with 2 or 3 live neighbours lives on to the next generation.
+  // - A Cell with more than 3 live neighbours dies of overcrowding.
+  // - An empty Cell with exactly 3 live neighbours "comes to life".
+  // - A Cell who "comes to life" outside the board should wrap at the other side of the board.
+
+  expect(determineNextGenState('alive',  0)).toBe('dead')
+  expect(determineNextGenState('alive',  1)).toBe('dead')
+  expect(determineNextGenState('alive',  2)).toBe('alive')
+  expect(determineNextGenState('alive',  3)).toBe('alive')
+  expect(determineNextGenState('alive',  4)).toBe('dead')
+  expect(determineNextGenState('alive',  5)).toBe('dead')
+  expect(determineNextGenState('alive',  6)).toBe('dead')
+  expect(determineNextGenState('alive',  7)).toBe('dead')
+  expect(determineNextGenState('alive',  8)).toBe('dead')
+
+  expect(determineNextGenState('dead',  0)).toBe('dead')
+  expect(determineNextGenState('dead',  1)).toBe('dead')
+  expect(determineNextGenState('dead',  2)).toBe('dead')
+  expect(determineNextGenState('dead',  3)).toBe('alive')
+  expect(determineNextGenState('dead',  4)).toBe('dead')
+  expect(determineNextGenState('dead',  5)).toBe('dead')
+  expect(determineNextGenState('dead',  6)).toBe('dead')
+  expect(determineNextGenState('dead',  7)).toBe('dead')
+  expect(determineNextGenState('dead',  8)).toBe('dead')
 })
 
 test('generateNextGen', () => {
