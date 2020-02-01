@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import classNames from 'classnames'
-import { CellGrid, CellState, countAliveNeighbours } from './cellSimulatorLib';
+import { CellGrid, CellState, countAliveNeighbours, generateNextGen } from './cellSimulatorLib';
 import styles from './App.module.css';
 
 const toCell = (cell: string) => (cell !== ' ' ? 'alive' : 'dead')
@@ -18,23 +18,49 @@ const testFrame1: Readonly<CellGrid> = [
 const App: React.FC = () => {
   const [showNeighboursCount, setShowNeighboursCount] = useState(false)
 
+  const [cellGrid, setCellGrid] = useState(testFrame1)
+
   const toggleShowNeighboursCount = () => 
     setShowNeighboursCount(!showNeighboursCount)
 
+  const gotoNextGen = () =>
+    setCellGrid(generateNextGen(cellGrid))
+
+  const gotoPrevGen = () =>
+    console.log('not ready yet')
+
+  const reset = () =>
+    setCellGrid(testFrame1)
+
+  const clear = () => 
+    console.log('not ready yet')
+
+  const togglePlayPause = () => 
+    console.log('not ready yet')
+
+  const stop = () => 
+    console.log('not ready yet')
+  
   return (
     <div className={styles.App}>
 
-      <label> Show neighbours count
-        <input 
-          type="checkbox" 
-          onClick={toggleShowNeighboursCount} 
-          checked={showNeighboursCount}
-        />
-      </label>
+      <div>
+        <label> Show neighbours count
+          <input 
+            type="checkbox" 
+            onClick={toggleShowNeighboursCount} 
+            checked={showNeighboursCount}
+          />
+        </label>
+      </div>
+
+      <div>
+        <button onClick={gotoNextGen}>Next Generation</button>
+      </div>
 
       <div className={styles.content}>
         <CellGridDisplay
-          grid={testFrame1} 
+          grid={cellGrid} 
           showNeighboursCount={showNeighboursCount}
         />
       </div>
