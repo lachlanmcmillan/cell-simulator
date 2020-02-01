@@ -14,7 +14,11 @@ export type CellGrid = Cell[][]
  * location (x,y) when layed out on a 2D plane (like a chessboard). Neighbours
  * includes diagonals.
  */  
-export function countAliveNeighbours(xPos: number, yPos: number, grid: Readonly<CellGrid>): number {
+export function countAliveNeighbours(
+  xPos: number, 
+  yPos: number, 
+  grid: Readonly<CellGrid>
+): number {
   let neighbours = 0
   const boardColumnMax = grid.length - 1 
   for (let x = xPos - 1; x <= xPos + 1; x++) {
@@ -30,6 +34,20 @@ export function countAliveNeighbours(xPos: number, yPos: number, grid: Readonly<
 }
 
 export function generateNextGen(grid: Readonly<CellGrid>): CellGrid {
-  // stub!
-  return [ ...grid ]
+  return grid.map((row, y) =>
+    row.map((cell, x) =>
+      determineNextGenState(
+        cell,
+        countAliveNeighbours(x, y, grid)
+      )
+    )
+  )
+}
+
+export function determineNextGenState(
+  cell: Cell, 
+  aliveNeighboursCount: number
+): Cell {
+  // stub !
+  return 'alive'
 }
