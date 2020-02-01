@@ -24,7 +24,7 @@ const testFrame1: Readonly<CellGrid> = [
 const App: React.FC = () => {
   const [showNeighboursCount, setShowNeighboursCount] = useState(false)
 
-  const { cellGrid, gotoNextGen, gotoPrevGen, reset, clear } = useCellSimulator(testFrame1)
+  const { cellGrid, gotoNextGen, gotoPrevGen, reset, clear, toggleCell } = useCellSimulator(testFrame1)
 
   const toggleShowNeighboursCount = () => 
     setShowNeighboursCount(!showNeighboursCount)
@@ -62,6 +62,7 @@ const App: React.FC = () => {
         <CellGridDisplay
           grid={cellGrid} 
           showNeighboursCount={showNeighboursCount}
+          onClickCell={toggleCell}
         />
       </div>
 
@@ -105,21 +106,29 @@ const useCellSimulator = (
     set([grid])
   }
 
-  const toggleSquare = (x: number, y: number) => null
+  const toggleCell = (xPos: number, yPos: number) => {
+    // toggling also resets the history
+    const grid = _getTopGrid()
+    grid[yPos][xPos] = (grid[yPos][xPos] === 'alive' ? 'dead' : 'alive')
+    set([grid])
+  }
+
   const togglePlayPause = () => null
   const stop = () => null
 
-  return { cellGrid: _getTopGrid(), gotoNextGen, gotoPrevGen, reset, clear }
+  return { cellGrid: _getTopGrid(), gotoNextGen, gotoPrevGen, reset, clear, toggleCell }
 }
 
 interface CellGridDisplayProps {
   grid: Readonly<CellGrid>,
-  showNeighboursCount?: boolean
+  showNeighboursCount: boolean,
+  onClickCell: (x: number, y: number) => void
 }
 
 const CellGridDisplay: React.FC<CellGridDisplayProps> = ({
   grid,
-  showNeighboursCount
+  showNeighboursCount,
+  onClickCell: onCellClick
 }: CellGridDisplayProps) => {
   return (
     <div className={styles.container}>
@@ -133,6 +142,7 @@ const CellGridDisplay: React.FC<CellGridDisplayProps> = ({
                   ? countAliveNeighbours(x, y, grid)
                   : undefined
               }
+              onClick={() => onCellClick(x, y)}
             />
           )}
         </div>
@@ -143,15 +153,19 @@ const CellGridDisplay: React.FC<CellGridDisplayProps> = ({
 
 interface CellDisplayProps {
   cell: CellState,
+  onClick: () => void,
   neighboursCount?: number
 }
 
-const CellDisplay: React.FC<CellDisplayProps> = ({ cell, neighboursCount }: CellDisplayProps) => {
+const CellDisplay: React.FC<CellDisplayProps> = ({ 
+  cell, 
+  onClick,
+  neighboursCount 
+}: CellDisplayProps) => {
   const classes = classNames(styles.CellDisplay, styles[cell])
   return (
-    <div className={classes}>{neighboursCount}</div>
+    <div className={classes} onClick={onClick}>{neighboursCount}</div>
   )
 }
-
 
 export default App;
