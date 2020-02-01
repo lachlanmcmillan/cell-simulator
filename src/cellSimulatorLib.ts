@@ -2,10 +2,10 @@
  * cellSimulatorLib.ts
  **/
 
-export type Cell = 'alive' | 'dead'
+export type CellState = 'alive' | 'dead'
 
 /** A grid of cells, with equal number columns and rows */
-export type CellGrid = Cell[][]
+export type CellGrid = CellState[][]
 
 /** 
  * For any Cell in a CellGrid, get the number of alive neighbours of that Cell
@@ -45,9 +45,9 @@ export function generateNextGen(grid: Readonly<CellGrid>): CellGrid {
 }
 
 export function determineNextGenState(
-  cell: Cell, 
+  cell: CellState, 
   aliveNeighboursCount: number
-): Cell {
+): CellState {
   // stub !
   return 'alive'
 }

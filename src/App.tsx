@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import classNames from 'classnames'
-import { CellGrid, Cell, countAliveNeighbours } from './cellSimulatorLib';
+import { CellGrid, CellState, countAliveNeighbours } from './cellSimulatorLib';
 import styles from './App.module.css';
 
 const toCell = (cell: string) => (cell !== ' ' ? 'alive' : 'dead')
@@ -73,7 +73,7 @@ const CellGridDisplay: React.FC<CellGridDisplayProps> = ({
 }
 
 interface CellDisplayProps {
-  cell: Cell,
+  cell: CellState,
   neighboursCount?: number
 }
 
