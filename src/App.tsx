@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import classNames from 'classnames'
-import { CellGrid, CellState, countAliveNeighbours, generateNextGen } from './cellSimulatorLib';
+import { 
+  CellGrid, 
+  CellState, 
+  countAliveNeighbours, 
+  generateNextGen,
+  createEmptyGrid
+} from './cellSimulatorLib';
 import styles from './App.module.css';
 
 const toCell = (cell: string) => (cell !== ' ' ? 'alive' : 'dead')
@@ -104,14 +110,6 @@ const useCellSimulator = (
   const stop = () => null
 
   return { cellGrid: _getTopGrid(), gotoNextGen, gotoPrevGen, reset, clear }
-}
-
-const createEmptyGrid = (rows: number, columns: number): CellGrid => {
-  const grid = []
-  for (let i = 0; i < rows; i++) {
-    grid.push(new Array(columns).fill('dead'))
-  }
-  return grid
 }
 
 interface CellGridDisplayProps {

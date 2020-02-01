@@ -58,3 +58,12 @@ export function determineNextGenState(
     (cell === 'dead' && aliveNeighboursCount === 3)
   ) ? 'alive' : 'dead'
 }
+
+export const createEmptyGrid = (rows: number, columns: number): CellGrid => {
+  const grid = []
+  for (let i = 0; i < rows; i++) {
+    grid.push(new Array(columns).fill('dead'))
+  }
+  return grid
+}
+
