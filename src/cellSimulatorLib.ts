@@ -4,7 +4,7 @@
 
 export type CellState = 'alive' | 'dead'
 
-/** A grid of cells, with equal number columns and rows */
+/** A grid of cells - all rows should have the same length*/
 export type CellGrid = CellState[][]
 
 /** 
@@ -20,11 +20,14 @@ export function countAliveNeighbours(
   grid: Readonly<CellGrid>
 ): number {
   let neighbours = 0
-  const boardColumnMax = grid.length - 1 
+  // ASSUMPTION. all rows are the same length
+  const xMax = grid[0].length 
+  const yMax = grid.length - 1
+
   for (let x = xPos - 1; x <= xPos + 1; x++) {
     for (let y = yPos - 1; y <= yPos + 1; y++) {
       if (x < 0 || y < 0) continue
-      if (x > boardColumnMax || y > boardColumnMax) continue
+      if (x > xMax || y > yMax) continue
       if (x === xPos && y === yPos) continue
 
       if (grid[y][x] === 'alive') neighbours++
