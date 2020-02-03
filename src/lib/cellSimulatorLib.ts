@@ -59,6 +59,16 @@ export function generateNextGen(grid: Readonly<CellGrid>): CellGrid {
   )
 }
 
+/**
+ * Given a CellGrid, evolve it to the next generation, including the rule
+ * 
+ * "A Cell who "comes to life" outside the board should wrap at the other side 
+ * of the board."
+ */
+export function generateNextGenWithWrapping(grid: Readonly<CellGrid>): CellGrid {
+  return [...grid]
+}
+
 /** 
  * Returns whether a cell will die/live in the next generation according
  * to the requirements.

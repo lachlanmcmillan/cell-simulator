@@ -2,8 +2,9 @@ import {
   CellGrid, 
   CellState,
   countAliveNeighbours, 
-  generateNextGen, 
-  _determineNextGenState 
+  generateNextGen,
+  generateNextGenWithWrapping,
+  _determineNextGenState
 } from './cellSimulatorLib'
 
 /** helper function to convert string cell representation into Cell type */
@@ -126,4 +127,30 @@ test('generateNextGen', () => {
   expect(generateNextGen(testFrame2)).toStrictEqual(testFrame3)
   expect(generateNextGen(testFrame3)).toStrictEqual(testFrame4)
   expect(generateNextGen(testFrame4)).toStrictEqual(testFrame5)
+})
+
+test('generateNextGenWithWrapping', () => {
+  // wrapping on all four edges
+  const frame1: Readonly<CellGrid> = [ 
+  //  0   1   2   3   4   5
+    ['X','X','X',' ',' ','X'], // 0
+    [' ',' ',' ',' ',' ','X'], // 1
+    [' ',' ',' ',' ',' ','X'], // 2
+    ['X',' ',' ',' ',' ',' '], // 3
+    ['X',' ',' ',' ',' ',' '], // 4
+    ['X',' ',' ','X','X','X']  // 5
+  ].map(row => row.map(toCell)) 
+
+
+  const frame2: Readonly<CellGrid> = [ 
+  //  0   1   2   3   4   5
+    [' ',' ',' ',' ','X',' '], // 0
+    ['X',' ',' ',' ',' ',' '], // 1
+    [' ',' ',' ',' ',' ',' '], // 2
+    [' ',' ',' ',' ',' ',' '], // 3
+    [' ',' ',' ',' ',' ','X'], // 4
+    [' ','X',' ',' ',' ',' ']  // 5
+  ].map(row => row.map(toCell)) 
+
+  expect(generateNextGenWithWrapping(frame1)).toStrictEqual(frame2)
 })
