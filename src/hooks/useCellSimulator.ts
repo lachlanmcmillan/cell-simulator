@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { CellGrid, generateNextGen, createEmptyGrid } from './cellSimulatorLib';
+import { CellGrid, generateNextGen, createEmptyGrid } from '../cellSimulatorLib';
 
 const useCellSimulator = (
   initialState: Readonly<CellGrid> = createEmptyGrid(6,6)
