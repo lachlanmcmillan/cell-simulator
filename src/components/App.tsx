@@ -31,7 +31,7 @@ const App: React.FC = () => {
         <label> Show neighbours count
           <input 
             type="checkbox" 
-            onClick={toggleShowNeighboursCount} 
+            onChange={toggleShowNeighboursCount} 
             checked={showNeighboursCount}
           />
         </label>
