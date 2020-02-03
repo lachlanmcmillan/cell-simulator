@@ -4,7 +4,7 @@ The "game" is a zero-player game, meaning that its evolution is determined by it
 
 ## Installing
 
-Requires: [Git](https://www.git-scm.com] and (NodeJS)[https://nodejs.org]
+Requires: [Git](https://www.git-scm.com) and [NodeJS](https://nodejs.org)
 
 - Clone repository with git
 
