@@ -17,16 +17,26 @@ const useCellSimulator = (
   const _popGrid = () => 
     set(gridStack.slice(0, gridStack.length - 1))
 
-  const gotoNextGen = () => 
-    _pushGrid(generateNextGen(_getTopGrid()))
+  /** Generate next generation and place on top of the stack */
+  const gotoNextGen = () => {
+    const nextGen = generateNextGen(_getTopGrid())
+    // this is a quick version of a deep compare
+    if (JSON.stringify(nextGen) !== JSON.stringify(_getTopGrid())) {
+      // only add history if the board has changed
+      _pushGrid(generateNextGen(_getTopGrid()))
+    }
+  }
 
+  /** Return to the previous generation of the CellGrid */ 
   const gotoPrevGen = () => 
     // minimum of one grid on the stack
     (gridStack.length > 1 && _popGrid())
 
+  /** Return to the original user configuration before next generation */
   const reset = () => 
     set(gridStack.slice(0,1))
 
+  /** Set all cells in CellGrid to dead */
   const clear = () => {
     const initial = gridStack[0]
     const rows = initial.length
@@ -37,6 +47,7 @@ const useCellSimulator = (
     set([grid])
   }
 
+  /** Switch specified cell between alive/dead */
   const toggleCell = (xPos: number, yPos: number) => {
     // toggling also resets the history
     const grid = _getTopGrid()
@@ -44,10 +55,14 @@ const useCellSimulator = (
     set([grid])
   }
 
-  const togglePlayPause = () => null
-  const stop = () => null
-
-  return { cellGrid: _getTopGrid(), gotoNextGen, gotoPrevGen, reset, clear, toggleCell }
+  return { 
+    cellGrid: _getTopGrid(), 
+    gotoNextGen, 
+    gotoPrevGen, 
+    reset, 
+    clear, 
+    toggleCell 
+  }
 }
 
 export default useCellSimulator;

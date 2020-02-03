@@ -7,6 +7,15 @@ export type CellState = 'alive' | 'dead'
 /** A grid of cells - all rows should have the same length*/
 export type CellGrid = CellState[][]
 
+/** Create a new CellGrid with all cells dead */
+export const createEmptyGrid = (rows: number, columns: number): CellGrid => {
+  const grid = []
+  for (let i = 0; i < rows; i++) {
+    grid.push(new Array(columns).fill('dead'))
+  }
+  return grid
+}
+
 /** 
  * For any Cell in a CellGrid, get the number of alive neighbours of that Cell
  * 
@@ -36,10 +45,13 @@ export function countAliveNeighbours(
   return neighbours
 }
 
+/**
+ * Given a CellGrid, evolve it to the next generation
+ */
 export function generateNextGen(grid: Readonly<CellGrid>): CellGrid {
   return grid.map((row, y) =>
     row.map((cell, x) =>
-      determineNextGenState(
+      _determineNextGenState(
         cell,
         countAliveNeighbours(x, y, grid)
       )
@@ -47,7 +59,11 @@ export function generateNextGen(grid: Readonly<CellGrid>): CellGrid {
   )
 }
 
-export function determineNextGenState(
+/** 
+ * Returns whether a cell will die/live in the next generation according
+ * to the requirements.
+ */
+export function _determineNextGenState(
   cell: CellState, 
   aliveNeighboursCount: number
 ): CellState {
@@ -57,13 +73,5 @@ export function determineNextGenState(
     (cell === 'alive' && aliveNeighboursCount === 3) ||
     (cell === 'dead' && aliveNeighboursCount === 3)
   ) ? 'alive' : 'dead'
-}
-
-export const createEmptyGrid = (rows: number, columns: number): CellGrid => {
-  const grid = []
-  for (let i = 0; i < rows; i++) {
-    grid.push(new Array(columns).fill('dead'))
-  }
-  return grid
 }
 
