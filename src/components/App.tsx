@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import CellGridDisplay from './components/CellGridDisplay'
-import { CellGrid, } from './cellSimulatorLib';
-import useCellSimulator from './useCellSimulator'
+import CellGridDisplay from './CellGridDisplay'
+import { CellGrid, } from '../cellSimulatorLib';
+import useCellSimulator from '../useCellSimulator'
 import styles from './App.module.css';
 
 const toCell = (cell: string) => (cell !== ' ' ? 'alive' : 'dead')
@@ -64,6 +64,5 @@ const App: React.FC = () => {
     </div>
   );
 }
-
 
 export default App;
