@@ -19,7 +19,16 @@ const testFrame1: CellGrid = [
 const App: React.FC = () => {
   const [showNeighboursCount, setShowNeighboursCount] = useState(false)
 
-  const { cellGrid, gotoNextGen, gotoPrevGen, reset, clear, toggleCell } = useCellSimulator(testFrame1)
+  const { 
+    cellGrid, 
+    isWrappingOn,
+    gotoNextGen, 
+    gotoPrevGen, 
+    reset, 
+    clear, 
+    toggleCell, 
+    toggleIsWrappingOn 
+  } = useCellSimulator(testFrame1)
 
   const toggleShowNeighboursCount = () => 
     setShowNeighboursCount(!showNeighboursCount)
@@ -29,11 +38,21 @@ const App: React.FC = () => {
 
       <div className={styles.controls}>
         <div>
-          <label> Show neighbours count
+          <label>Show neighbours count
             <input 
               type="checkbox" 
               onChange={toggleShowNeighboursCount} 
               checked={showNeighboursCount}
+            />
+          </label>
+        </div>
+
+        <div>
+          <label>Enable Wrapping at board edge
+            <input 
+              type="checkbox" 
+              onChange={toggleIsWrappingOn} 
+              checked={isWrappingOn}
             />
           </label>
         </div>

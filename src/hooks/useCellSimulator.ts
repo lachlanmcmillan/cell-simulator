@@ -1,5 +1,10 @@
 import { useState } from 'react'
-import { CellGrid, generateNextGen, createEmptyGrid } from '../lib/cellSimulatorLib';
+import { 
+  CellGrid, 
+  generateNextGen, 
+  generateNextGenWithWrapping,
+  createEmptyGrid 
+} from '../lib/cellSimulatorLib';
 import NonEmptyStack from '../lib/NonEmptyStack'
 
 /** 
@@ -9,11 +14,13 @@ const useCellSimulator = (
   initialState: CellGrid = createEmptyGrid(6,6)
 ) => {
   const [gridStack, setStack] = useState(new NonEmptyStack<CellGrid>([initialState]))
+  const [isWrappingOn, setIsWrappingOn] = useState(false)
 
-  return { 
+  return {
     cellGrid: gridStack.top(), 
+    isWrappingOn,
 
-    gotoNextGen: () => setStack(_gotoNextGen), 
+    gotoNextGen: () => setStack(prevStack => _gotoNextGen(prevStack, isWrappingOn)), 
 
     /** Return to the previous generation of the CellGrid */ 
     gotoPrevGen: () => setStack(_gotoPrevGen), 
@@ -26,7 +33,9 @@ const useCellSimulator = (
 
     /** Switch specified cell between alive/dead */
     toggleCell: (xPos: number, yPos: number) => 
-      setStack(prevStack => _toggleCell(prevStack, xPos, yPos)) 
+      setStack(prevStack => _toggleCell(prevStack, xPos, yPos)),
+    
+    toggleIsWrappingOn: () => setIsWrappingOn(prev => !prev)
   }
 }
 
@@ -36,8 +45,11 @@ export default useCellSimulator;
 
 export type CellGridStack = NonEmptyStack<CellGrid> // reduce typing
 
-export const _gotoNextGen = (gridStack: CellGridStack): CellGridStack => {
-  const nextGen = generateNextGen(gridStack.top())
+export const _gotoNextGen = (gridStack: CellGridStack, wrapAtEdge: boolean): CellGridStack => {
+  const nextGen = (wrapAtEdge
+    ? generateNextGenWithWrapping(gridStack.top())
+    : generateNextGen(gridStack.top())
+  )
   // this is a quick version of a deep compare
   const hasBoardChanged = (
     JSON.stringify(nextGen) !== JSON.stringify(gridStack.top())

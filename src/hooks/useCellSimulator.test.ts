@@ -63,10 +63,10 @@ test("_gotoPrevGen does not change the state if prev-gen is the original configu
 
 test("_reset returns the game board to the user's configuration", () => {
   let stack = new NonEmptyStack<CellGrid>([testFrame1, testFrame2])
-  stack = _gotoNextGen(stack)
-  stack = _gotoNextGen(stack)
-  stack = _gotoNextGen(stack)
-  stack = _gotoNextGen(stack)
+  stack = _gotoNextGen(stack, false)
+  stack = _gotoNextGen(stack, false)
+  stack = _gotoNextGen(stack, false)
+  stack = _gotoNextGen(stack, false)
   expect(stack.top()).not.toStrictEqual(testFrame1)
   stack = _reset(stack)
   expect(stack.top()).toStrictEqual(testFrame1)
