@@ -1,12 +1,13 @@
 import { 
   CellGrid, 
+  CellState,
   countAliveNeighbours, 
   generateNextGen, 
   _determineNextGenState 
 } from './cellSimulatorLib'
 
 /** helper function to convert string cell representation into Cell type */
-const toCell = (cell: string) => (cell !== ' ' ? 'alive' : 'dead')
+const toCell = (str: string): CellState => (str !== ' ' ? 'alive' : 'dead')
 
 // the first frame of test image
 // https://user-images.githubusercontent.com/7149052/53603476-bfb00e00-3c05-11e9-8862-1dfd31836dcd.jpg
