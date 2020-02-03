@@ -6,7 +6,7 @@ import styles from './App.module.css';
 
 const toCell = (cell: string) => (cell !== ' ' ? 'alive' : 'dead')
 
-const testFrame1: Readonly<CellGrid> = [ 
+const testFrame1: CellGrid = [ 
 //  0   1   2   3   4   5
   [' ',' ',' ',' ',' ',' '], // 0
   [' ',' ','X',' ',' ',' '], // 1
@@ -28,31 +28,31 @@ const App: React.FC = () => {
     <div className={styles.App}>
 
       <div className={styles.controls}>
-      <div>
-        <label> Show neighbours count
-          <input 
-            type="checkbox" 
-            onChange={toggleShowNeighboursCount} 
-            checked={showNeighboursCount}
-          />
-        </label>
-      </div>
+        <div>
+          <label> Show neighbours count
+            <input 
+              type="checkbox" 
+              onChange={toggleShowNeighboursCount} 
+              checked={showNeighboursCount}
+            />
+          </label>
+        </div>
 
-      <div>
-        <button onClick={gotoNextGen}>Next Generation</button>
-      </div>
+        <div>
+          <button onClick={gotoNextGen}>Next Generation</button>
+        </div>
 
-      <div>
-        <button onClick={gotoPrevGen}>Previous Generation</button>
-      </div>
+        <div>
+          <button onClick={gotoPrevGen}>Previous Generation</button>
+        </div>
 
-      <div>
-        <button onClick={reset}>Reset</button>
-      </div>
+        <div>
+          <button onClick={reset}>Reset</button>
+        </div>
 
-      <div>
-        <button onClick={clear}>Clear</button>
-      </div>
+        <div>
+          <button onClick={clear}>Clear</button>
+        </div>
       </div>
 
       <div className={styles.content}>
