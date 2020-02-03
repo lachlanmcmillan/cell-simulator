@@ -18,7 +18,9 @@ const CellGridDisplay: React.FC<CellGridDisplayProps> = ({
   return (
     <div className={styles.container}>
       {grid.map((row, y) =>
-        <div className={styles.row}>
+        // these rows/cells are not being rearranged, so it's okay to use the 
+        // array index as a react-key here
+        <div className={styles.row} key={y}>
           {row.map((cell, x) => 
             <CellDisplay 
               cell={cell} 
@@ -28,6 +30,7 @@ const CellGridDisplay: React.FC<CellGridDisplayProps> = ({
                   : undefined
               }
               onClick={() => onCellClick(x, y)}
+              key={x}
             />
           )}
         </div>
