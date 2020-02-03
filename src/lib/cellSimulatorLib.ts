@@ -66,7 +66,43 @@ export function generateNextGen(grid: Readonly<CellGrid>): CellGrid {
  * of the board."
  */
 export function generateNextGenWithWrapping(grid: Readonly<CellGrid>): CellGrid {
-  return [...grid]
+  const columns = grid[0].length
+  const rows = grid.length
+  const nextGrid = createEmptyGrid(grid.length, grid[0].length)
+  for (let y = 0; y < rows; y++) {
+    for (let x = 0; x < columns; x++) {
+      nextGrid[y][x] = _determineNextGenState(
+        grid[y][x],
+        countAliveNeighbours(x,y,grid)
+      )
+    }
+  }
+  // do the 'off-grid' manipulations after, so they take precedence
+  // these loops could be unwrapped in the future to speed them up
+  for (let y = -1; y < rows + 1; y++) {
+    for (let x = -1; x < columns + 1; x++) {
+      const offGrid = (x < 0 || y < 0 || x >= columns || y >= rows)
+      if (offGrid) {
+        const nextCellState = _determineNextGenState(
+          'dead',
+          countAliveNeighbours(x, y, grid)
+        ) 
+        if (nextCellState === 'alive') {
+          const wrappedX = _wrapNumberInRange(x, 0, columns - 1)
+          const wrappedY = _wrapNumberInRange(y, 0, rows - 1)
+          nextGrid[wrappedY][wrappedX] = 'alive'
+        }
+      }
+    }
+  }
+  return nextGrid
+}
+
+export const _wrapNumberInRange = (num: number, min: number, max: number) => {
+  if (num < min) return max
+  if (num > max) return min
+
+  return num
 }
 
 /** 
