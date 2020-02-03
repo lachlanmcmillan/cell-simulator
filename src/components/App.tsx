@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import CellGridDisplay from './CellGridDisplay'
-import { CellGrid, } from '../cellSimulatorLib';
+import { CellGrid, } from '../lib/cellSimulatorLib';
 import useCellSimulator from '../hooks/useCellSimulator'
 import styles from './App.module.css';
 

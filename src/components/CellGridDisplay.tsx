@@ -2,7 +2,7 @@ import React from 'react'
 import styles from './CellGridDisplay.module.css'
 import CellDisplay from './CellDisplay'
 
-import { CellGrid, countAliveNeighbours, } from '../cellSimulatorLib';
+import { CellGrid, countAliveNeighbours, } from '../lib/cellSimulatorLib';
 
 interface CellGridDisplayProps {
   grid: Readonly<CellGrid>,

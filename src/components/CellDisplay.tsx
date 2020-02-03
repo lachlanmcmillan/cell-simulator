@@ -1,6 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
-import { CellState } from '../cellSimulatorLib'
+import { CellState } from '../lib/cellSimulatorLib'
 import styles from './CellDisplay.module.css'
 
 interface CellDisplayProps {
