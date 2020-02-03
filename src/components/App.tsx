@@ -1,20 +1,8 @@
 import React, { useState } from 'react';
 import CellGridDisplay from './CellGridDisplay'
-import { CellGrid, } from '../lib/cellSimulatorLib';
+import { createEmptyGrid } from '../lib/cellSimulatorLib';
 import useCellSimulator from '../hooks/useCellSimulator'
 import styles from './App.module.css';
-
-const toCell = (cell: string) => (cell !== ' ' ? 'alive' : 'dead')
-
-const testFrame1: CellGrid = [ 
-//  0   1   2   3   4   5
-  [' ',' ',' ',' ',' ',' '], // 0
-  [' ',' ','X',' ',' ',' '], // 1
-  [' ',' ',' ','X',' ',' '], // 2
-  [' ','X','X','X',' ',' '], // 3
-  [' ',' ',' ',' ',' ',' '], // 4
-  [' ',' ',' ',' ',' ',' ']  // 5
-].map(row => row.map(toCell)) 
 
 const App: React.FC = () => {
   const [showNeighboursCount, setShowNeighboursCount] = useState(false)
@@ -28,7 +16,7 @@ const App: React.FC = () => {
     clear, 
     toggleCell, 
     toggleIsWrappingOn 
-  } = useCellSimulator(testFrame1)
+  } = useCellSimulator(createEmptyGrid(6,6))
 
   const toggleShowNeighboursCount = () => 
     setShowNeighboursCount(!showNeighboursCount)
