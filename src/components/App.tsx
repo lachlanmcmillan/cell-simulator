@@ -27,6 +27,7 @@ const App: React.FC = () => {
   return (
     <div className={styles.App}>
 
+      <div className={styles.controls}>
       <div>
         <label> Show neighbours count
           <input 
@@ -51,6 +52,7 @@ const App: React.FC = () => {
 
       <div>
         <button onClick={clear}>Clear</button>
+      </div>
       </div>
 
       <div className={styles.content}>

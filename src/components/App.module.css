@@ -2,7 +2,12 @@
   background-color: #282c34;
   font-size: 18px;
   color: white;
-  padding: 20px;
+}
+
+.controls {
+  position: absolute;
+  top: 20px;
+  left: 20px;
 }
 
 .content {
