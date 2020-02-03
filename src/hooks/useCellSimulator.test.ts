@@ -36,14 +36,14 @@ const testFrame2: CellGrid = [
 
 test("_gotoNextGen adds the next generation to the top of the stack", () => {
   const stack = new NonEmptyStack<CellGrid>([testFrame1])
-  const nextState = _gotoNextGen(stack)
+  const nextState = _gotoNextGen(stack, false)
   expect(nextState.top()).toStrictEqual(testFrame2)
 })
 
 test("_gotoNextGen does not change the state if the next-gen is no different from the last gen", () => {
   const emptyBoard = createEmptyGrid(6,6)
   const stack = new NonEmptyStack<CellGrid>([emptyBoard])
-  const nextState = _gotoNextGen(stack)
+  const nextState = _gotoNextGen(stack, false)
   expect(nextState.top()).toStrictEqual(emptyBoard)
 })
 
