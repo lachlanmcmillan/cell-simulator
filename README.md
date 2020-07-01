@@ -2,6 +2,8 @@
 
 The "game" is a zero-player game, meaning that its evolution is determined by its initial state, requiring no further input. One interacts with the Cell Simulator by creating an initial configuration and observing how it evolves.
 
+This project was created in a few hours as part of a job application.
+
 ## Installing
 
 Requires: [Git](https://www.git-scm.com) and [NodeJS](https://nodejs.org)
